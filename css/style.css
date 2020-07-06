@@ -2,13 +2,11 @@
     background-color: #b4aeae21;
     padding: 12px 32px;
     font: 10pt/10pt bold;
-    border-radius: 7px;
     border: 1px solid #dbdbdbd8;
     font-size: 100%;
     text-align: center;
     width: 100%;
-    outline-style: none
-
+    outline-style: none;
 }
 
 .numKeys:active {
@@ -18,4 +16,16 @@
 
   .operatorKeys{
     background-color: #ffa32a;
+}
+
+.operatorKeys:active {
+    background-color: #a06518;
+    transform: translateY(1px);
+}
+
+#numField {
+    background-color: #ffffff21;
+    font: 32pt/10pt bold;
+    outline-style: none;
+    text-align: right;
 }
