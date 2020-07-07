@@ -1,4 +1,4 @@
-.numKeys, .operatorKeys {
+.numKeys, .additionalKeys, .operatorKeys {
     background-color: #b4aeae21;
     padding: 12px 32px;
     font: 10pt/10pt bold;
@@ -9,12 +9,12 @@
     outline-style: none;
 }
 
-.numKeys:active {
+.additionalKeys:active, .numKeys:active {
     background-color: #a5a5a554;
     transform: translateY(1px);
   }
 
-  .operatorKeys{
+.operatorKeys{
     background-color: #ffa32a;
 }
 
@@ -23,9 +23,10 @@
     transform: translateY(1px);
 }
 
+
 #numField {
     background-color: #ffffff21;
-    font: 32pt/10pt bold;
+    font: 32pt/10pt normal;
     outline-style: none;
     text-align: right;
 }
