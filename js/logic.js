@@ -5,9 +5,9 @@ let fromScreenValue = 0;
 let firstArg = 0;
 let secondArg = 0;
 let mathAction;
-let currentIsNegative = false;
+let isFirstOrSecond = 1;
 let endOfOperation = false;
-let result;
+
 let formatter = new Intl.NumberFormat('ru', { maximumFractionDigits: 8 });
 
 let initialization = function () {
@@ -16,23 +16,16 @@ let initialization = function () {
     firstArg = 0;
     secondArg = 0;
     mathAction = undefined;
-    currentIsNegative = false;
+    isFirstOrSecond = 1;
     endOfOperation = false;
-    result = undefined;
 }
 
 let next = function (mathLogicFunc) {
     numField.value = 0;
-    if (endOfOperation) {
-        firstArg = result;
-        endOfOperation = false;
-    }
-    else {
-        firstArg = fromScreenValue;
-    }
+    isFirstOrSecond = 2;
     fromScreenValue = 0;
     mathAction = mathLogicFunc;
-
+    endOfOperation = false;
 }
 
 //math logic
@@ -69,22 +62,27 @@ clear_Key.onclick = () => initialization();
 let changeSign_Key = document.getElementById('changeSign_Key');
 changeSign_Key.onclick = () => {
     if (endOfOperation) {
-        fromScreenValue = result;
+        isFirstOrSecond = 1;
     }
 
-    if (currentIsNegative) {
-        fromScreenValue = Math.abs(fromScreenValue);
-        numField.value = formatter.format(fromScreenValue);;
+    fromScreenValue = fromScreenValue * (-1);
+    numField.value = formatter.format(fromScreenValue);
+
+    if (isFirstOrSecond === 1) {
+        firstArg = +fromScreenValue;
     }
-    else {
-        fromScreenValue = fromScreenValue * (-1);
-        numField.value = formatter.format(fromScreenValue);;
+    else if (isFirstOrSecond === 2) {
+        secondArg = +fromScreenValue;
     }
 }
 
-
-
+//cents
 let cents_Key = document.getElementById('cents_Key');
+cents_Key.onclick = () => {
+    let cent = firstArg / 100;
+    secondArg = cent * secondArg;
+    numField.value = formatter.format(secondArg);
+}
 
 //division
 let division_Key = document.getElementById('division_Key');
@@ -109,11 +107,10 @@ result_Key.onclick = () => {
         return
     }
     endOfOperation = true;
-    secondArg = fromScreenValue;
+    // secondArg = fromScreenValue;
     firstArg = mathAction();
-
+    fromScreenValue = firstArg;
     numField.value = formatter.format(firstArg)
-    result = firstArg;
 }
 
 
@@ -130,7 +127,6 @@ decimal_Key.onclick = () => {
 
 //write numbers
 let numKey = document.getElementsByClassName('numKeys');
-
 for (let i = 0; i < numKey.length; i++) {
     let currentValue = numKey[i].innerText;
     numKey[i].onclick = () => {
@@ -149,11 +145,14 @@ for (let i = 0; i < numKey.length; i++) {
         }
 
         fromScreenValue += currentValue;
-
-        // console.log(fromScreenValue);
-        // console.log(+fromScreenValue);
-
         numField.value = formatter.format(+fromScreenValue);
+
+        if (isFirstOrSecond === 1) {
+            firstArg = +fromScreenValue;
+        }
+        else if (isFirstOrSecond === 2) {
+            secondArg = +fromScreenValue;
+        }
     }
 }
 
