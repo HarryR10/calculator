@@ -21,10 +21,19 @@ let initialization = function () {
 }
 
 let next = function (mathLogicFunc) {
-    numField.value = 0;
+
+    // console.log(firstArg);
+    // console.log(secondArg);
+
+    if (mathAction != undefined && !endOfOperation) {
+        result_Key.onclick();
+    }
+    else {
+        numField.value = 0;
+    }
+    mathAction = mathLogicFunc;
     isFirstOrSecond = 2;
     fromScreenValue = 0;
-    mathAction = mathLogicFunc;
     endOfOperation = false;
 }
 
@@ -81,6 +90,7 @@ let cents_Key = document.getElementById('cents_Key');
 cents_Key.onclick = () => {
     let cent = firstArg / 100;
     secondArg = cent * secondArg;
+    fromScreenValue = secondArg;
     numField.value = formatter.format(secondArg);
 }
 
